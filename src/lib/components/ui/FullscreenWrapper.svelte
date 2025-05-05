@@ -8,6 +8,8 @@
 	let lastTap = 0;
 
 	function toggleFullscreen() {
+		if (typeof document === 'undefined') return;
+
 		if (!document.fullscreenElement && container?.requestFullscreen) {
 			container.requestFullscreen();
 		} else if (document.exitFullscreen) {
@@ -16,10 +18,13 @@
 	}
 
 	function handleFullscreenChange() {
+		if (typeof document === 'undefined') return;
 		isFullscreen = !!document.fullscreenElement;
 	}
 
 	function handleDoubleTap() {
+		if (typeof window === 'undefined') return;
+
 		const now = Date.now();
 		if (now - lastTap < 300) {
 			toggleFullscreen();
@@ -28,10 +33,15 @@
 	}
 
 	onMount(() => {
-		document.addEventListener('fullscreenchange', handleFullscreenChange);
+		if (typeof document !== 'undefined') {
+			document.addEventListener('fullscreenchange', handleFullscreenChange);
+		}
 	});
+
 	onDestroy(() => {
-		document.removeEventListener('fullscreenchange', handleFullscreenChange);
+		if (typeof document !== 'undefined') {
+			document.removeEventListener('fullscreenchange', handleFullscreenChange);
+		}
 	});
 </script>
 

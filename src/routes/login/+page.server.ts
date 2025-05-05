@@ -1,4 +1,5 @@
 // src/routes/login/+page.server.ts
+import { STUB_PASSWORD, STUB_USER } from '$env/static/private';
 import type { Actions, PageServerLoad } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 
@@ -9,8 +10,7 @@ interface StubUser {
 }
 
 const stubUsers: StubUser[] = [
-	{ id: 'user1', password: 'userpass', roles: ['user'] },
-	{ id: '***REMOVED***', password: '***REMOVED***pass', roles: ['***REMOVED***', 'user'] }
+	{ id: STUB_USER, password: STUB_PASSWORD, roles: ['***REMOVED***', 'user'] }
 ];
 
 export const load: PageServerLoad = async ({ locals }) => {

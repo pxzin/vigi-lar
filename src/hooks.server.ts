@@ -1,5 +1,6 @@
 // src/hooks.server.ts
 import type { Handle } from '@sveltejs/kit';
+import { STUB_USER, STUB_PASSWORD } from '$env/static/private';
 
 interface StubUser {
 	id: string;
@@ -10,7 +11,7 @@ interface StubUser {
 // mesmíssimo stubUsers do login
 const stubUsers: StubUser[] = [
 	{ id: 'user1', roles: ['user'] },
-	{ id: '***REMOVED***', roles: ['***REMOVED***', 'user'] }
+	{ id: STUB_USER, roles: ['***REMOVED***', 'user'] }
 ];
 
 export const handle: Handle = async ({ event, resolve }) => {

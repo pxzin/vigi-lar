@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { startStream } from '$lib/server/streams/server.js';
+import { startStream } from '$lib/server/streams/server';
 
 export async function GET({ url }) {
 	const channel = parseInt(url.searchParams.get('channel') || '1');

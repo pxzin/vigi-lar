@@ -11,6 +11,8 @@
 	let pipVideo: HTMLVideoElement | null = null;
 
 	onMount(async () => {
+		if (import.meta.env.SSR) return;
+
 		try {
 			const { default: jsmpeg } = await import('jsmpeg');
 			const res = await fetch(`/api/start-stream?channel=${channelId}`);
@@ -35,15 +37,17 @@
 	});
 
 	onDestroy(() => {
+		if (import.meta.env.SSR) return;
+
 		// Fecha PiP se ativo
 		if (document.pictureInPictureElement === pipVideo) {
-			document.exitPictureInPicture();
+			document.exitPictureInPicture().catch(() => {});
 		}
 		pipVideo?.remove();
 	});
 
 	async function enterPiP() {
-		if (!canvas) return;
+		if (import.meta.env.SSR || !canvas) return;
 		const stream = (canvas as any).captureStream?.();
 		if (!stream) {
 			console.warn('⚠️ captureStream não suportado');
@@ -70,6 +74,7 @@
 
 <div class="relative w-full h-full">
 	<canvas bind:this={canvas} class="w-full h-full bg-black" />
+
 	{#if loading}
 		<div
 			class="absolute inset-0 flex items-center justify-center bg-black text-white text-sm opacity-75"
@@ -85,10 +90,11 @@
 		title="Picture-in-Picture"
 		aria-label="Picture-in-Picture"
 	>
+		<!-- Ícone SVG de PiP -->
 		<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
 			<path
 				d="M19 7H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h5v2H5c-2.21 0-4-1.79-4-4V9c0-2.21 
-	1.79-4 4-4h14c2.21 0 4 1.79 4 4v2h-2V9c0-1.1-.9-2-2-2z"
+				1.79-4 4-4h14c2.21 0 4 1.79 4 4v2h-2V9c0-1.1-.9-2-2-2z"
 			/>
 			<path d="M21 13h-8v6h8v-6z" />
 		</svg>
