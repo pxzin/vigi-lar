@@ -1,38 +1,79 @@
-# sv
+# VigiLar 🛡️📹
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Sistema de monitoramento por câmeras com **streaming via WebSocket**, desenvolvido com **SvelteKit** no frontend e **Node.js** com FFmpeg no backend.
 
-## Creating a project
+## ✨ Funcionalidades
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Exibição de múltiplas câmeras simultaneamente
+- Fullscreen e Picture-in-Picture (PiP)
+- Autodesligamento de streams inativas
+- Suporte dinâmico a múltiplos canais
+- Status em tempo real de conexões e streams
+- Interface leve e responsiva, otimizada para desktop e mobile
 
-```bash
-# create a new project in the current directory
-npx sv create
+## ⚙️ Tecnologias
 
-# create a new project in my-app
-npx sv create my-app
-```
+- [SvelteKit](https://kit.svelte.dev/)
+- [UnoCSS](https://unocss.dev/)
+- [jsmpeg](https://github.com/phoboslab/jsmpeg)
+- [FFmpeg](https://ffmpeg.org/)
+- Node.js (backend websocket)
 
-## Developing
+## 🚀 Começando
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
+1. Clone o projeto:
 
 ```bash
-npm run build
+git clone https://github.com/pxzin/vigi-lar.git
+cd vigi-lar
+pnpm install
 ```
 
-You can preview the production build with `npm run preview`.
+2. Crie o arquivo `.env`:
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+> ⚠️ Nunca compartilhe este arquivo ou adicione ao Git.
+
+```env
+RTSP_HOST=your.camera.ip.address
+RTSP_USER=your_rtsp_username
+RTSP_PASS=your_rtsp_password
+
+STUB_USER=stub_username
+STUB_PASSWORD=stub_password
+```
+
+3. Inicie o projeto:
+
+```bash
+pnpm dev
+```
+
+O frontend estará disponível em `http://localhost:5173`, e o backend de stream será gerenciado automaticamente.
+
+## 📁 Estrutura
+
+```
+src/
+├── lib/
+│   ├── components/     → Componentes UI e stream
+│   ├── server/streams/ → Servidor WebSocket + FFmpeg
+│   └── utils/          → Utilitários e autenticação
+├── routes/             → Rotas SvelteKit
+└── app.html            → Template principal
+```
+
+## 🧠 Observações
+
+- As streams são ativadas sob demanda e encerradas após 30s sem clientes conectados.
+- O componente `VideoStream.svelte` cuida da desconexão automática no `unmount`.
+- O WebSocket utiliza uma porta por canal (ex: 10001 para canal 1).
+
+## 📦 Build
+
+```bash
+pnpm build
+```
+
+---
+
+Feito com 💙 por [pxzin](https://github.com/pxzin) — segurança e praticidade na palma da mão.
