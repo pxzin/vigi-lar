@@ -12,7 +12,7 @@ export async function startStream(channel: number): Promise<{ port: number }> {
 	const WIDTH = 640;
 	const HEIGHT = 360;
 
-	const user = RTSP_USER || '***REMOVED***';
+	const user = RTSP_USER || 'admin';
 	const pass = RTSP_PASS ?? ''; // permite senha em branco
 	const host = RTSP_HOST;
 
