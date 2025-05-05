@@ -1,6 +1,6 @@
 // src/hooks.server.ts
 import type { Handle } from '@sveltejs/kit';
-import { STUB_USER, STUB_PASSWORD } from '$env/static/private';
+import { STUB_USER } from '$env/static/private';
 
 interface StubUser {
 	id: string;
