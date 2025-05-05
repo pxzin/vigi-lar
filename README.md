@@ -1,79 +1,96 @@
-# VigiLar 🛡️📹
+# VigiLar
 
-Sistema de monitoramento por câmeras com **streaming via WebSocket**, desenvolvido com **SvelteKit** no frontend e **Node.js** com FFmpeg no backend.
+Sistema de monitoramento por vídeo com múltiplos canais e recursos de tela cheia, PiP (Picture-in-Picture) e streaming via RTSP.
 
-## ✨ Funcionalidades
+## 🚀 Funcionalidades principais
 
-- Exibição de múltiplas câmeras simultaneamente
-- Fullscreen e Picture-in-Picture (PiP)
-- Autodesligamento de streams inativas
-- Suporte dinâmico a múltiplos canais
-- Status em tempo real de conexões e streams
-- Interface leve e responsiva, otimizada para desktop e mobile
+- 🎥 Streaming de vídeo via RTSP convertido para MPEG-1
+- 🖥️ Visualização ao vivo com suporte a PiP (Picture-in-Picture)
+- 🧭 Interface moderna com Svelte 5
+- 🔐 Autenticação por stub local (login fictício)
+- 🧪 Testes automatizados com Vitest e Playwright
+- 📡 API REST para controle de stream e status dos canais
+- 🧵 Wrapper Fullscreen reutilizável
 
-## ⚙️ Tecnologias
-
-- [SvelteKit](https://kit.svelte.dev/)
-- [UnoCSS](https://unocss.dev/)
-- [jsmpeg](https://github.com/phoboslab/jsmpeg)
-- [FFmpeg](https://ffmpeg.org/)
-- Node.js (backend websocket)
-
-## 🚀 Começando
-
-1. Clone o projeto:
+## 🗂️ Estrutura de arquivos
 
 ```bash
-git clone https://github.com/pxzin/vigi-lar.git
-cd vigi-lar
-pnpm install
+.
+├── README.md
+├── e2e/
+│   └── demo.test.ts
+├── src/
+│   ├── app.d.ts
+│   ├── demo.spec.ts
+│   ├── hooks.server.ts
+│   ├── lib/
+│   │   ├── components/
+│   │   │   ├── VideoStream.svelte
+│   │   │   └── ui/
+│   │   │       ├── Alert.svelte
+│   │   │       ├── Button.svelte
+│   │   │       ├── Container.svelte
+│   │   │       ├── FullscreenWrapper.svelte
+│   │   │       ├── Header.svelte
+│   │   │       ├── Input.svelte
+│   │   │       └── Player.svelte
+│   │   ├── index.ts
+│   │   └── server/streams/server.ts
+│   ├── routes/
+│   │   ├── +layout.svelte
+│   │   ├── +page.server.ts
+│   │   ├── +page.svelte
+│   │   ├── api/
+│   │   │   ├── start-stream/+server.ts
+│   │   │   └── streams/status/+server.ts
+│   │   ├── login/
+│   │   │   ├── +page.server.ts
+│   │   │   └── +page.svelte
+│   │   ├── page.svelte.test.ts
+│   │   └── playground/
+│   │       ├── +page.svelte
+│   │       ├── alert/+page.svelte
+│   │       ├── button/+page.svelte
+│   │       ├── container/+page.svelte
+│   │       ├── input/+page.svelte
+│   │       └── stream/+page.svelte
+├── tsconfig.json
+├── uno.config.ts
+├── vite.config.ts
+├── vitest-setup-client.ts
+└── package.json
 ```
 
-2. Crie o arquivo `.env`:
+## ⚙️ Variáveis de ambiente
 
-> ⚠️ Nunca compartilhe este arquivo ou adicione ao Git.
+Crie um arquivo `.env` com:
 
 ```env
-RTSP_HOST=your.camera.ip.address
 RTSP_USER=your_rtsp_username
 RTSP_PASS=your_rtsp_password
+RTSP_HOST=your_rtsp_host_or_ip
 
-STUB_USER=stub_username
-STUB_PASSWORD=stub_password
+STUB_USER=stub_login_user
+STUB_PASSWORD=stub_login_password
 ```
 
-3. Inicie o projeto:
+> ⚠️ **Nunca compartilhe seu `.env`**. Este arquivo deve ser listado no `.gitignore`.
+
+## 📦 Scripts úteis
 
 ```bash
-pnpm dev
+pnpm dev        # Inicia o modo de desenvolvimento
+pnpm build      # Build para produção (somente frontend)
+pnpm preview    # Pré-visualização do build
+pnpm test       # Testes unitários (Vitest)
+pnpm e2e        # Testes end-to-end (Playwright)
 ```
 
-O frontend estará disponível em `http://localhost:5173`, e o backend de stream será gerenciado automaticamente.
+## ☁️ Deploy e Túnel
 
-## 📁 Estrutura
-
-```
-src/
-├── lib/
-│   ├── components/     → Componentes UI e stream
-│   ├── server/streams/ → Servidor WebSocket + FFmpeg
-│   └── utils/          → Utilitários e autenticação
-├── routes/             → Rotas SvelteKit
-└── app.html            → Template principal
-```
-
-## 🧠 Observações
-
-- As streams são ativadas sob demanda e encerradas após 30s sem clientes conectados.
-- O componente `VideoStream.svelte` cuida da desconexão automática no `unmount`.
-- O WebSocket utiliza uma porta por canal (ex: 10001 para canal 1).
-
-## 📦 Build
-
-```bash
-pnpm build
-```
+- Para testes locais remotos, use Cloudflare Tunnel (`cloudflared tunnel`) e libere o domínio no `vite.config.ts`
+- A Vercel pode ser usada para hospedagem apenas do frontend. O backend deve estar ativo em outro host ou túnel
 
 ---
 
-Feito com 💙 por [pxzin](https://github.com/pxzin) — segurança e praticidade na palma da mão.
+© 2025 VigiLar. Todos os direitos reservados.
