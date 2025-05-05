@@ -6,7 +6,7 @@ declare global {
 		interface Locals {
 			user?: {
 				id: string;
-				roles: ('user' | '***REMOVED***')[];
+				roles: ('user' | 'admin')[];
 			};
 		}
 		// interface PageData {}

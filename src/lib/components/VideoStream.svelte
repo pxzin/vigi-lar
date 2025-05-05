@@ -73,7 +73,7 @@
 </script>
 
 <div class="relative w-full h-full">
-	<canvas bind:this={canvas} class="w-full h-full bg-black" />
+	<canvas bind:this={canvas} class="w-full h-full bg-black"></canvas>
 
 	{#if loading}
 		<div

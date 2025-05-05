@@ -5,13 +5,13 @@ import { STUB_USER } from '$env/static/private';
 interface StubUser {
 	id: string;
 	password?: string;
-	roles: ('user' | '***REMOVED***')[];
+	roles: ('user' | 'admin')[];
 }
 
 // mesmíssimo stubUsers do login
 const stubUsers: StubUser[] = [
 	{ id: 'user1', roles: ['user'] },
-	{ id: STUB_USER, roles: ['***REMOVED***', 'user'] }
+	{ id: STUB_USER, roles: ['admin', 'user'] }
 ];
 
 export const handle: Handle = async ({ event, resolve }) => {
