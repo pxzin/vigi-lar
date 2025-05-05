@@ -1,0 +1,25 @@
+// src/hooks.server.ts
+import type { Handle } from '@sveltejs/kit';
+
+interface StubUser {
+	id: string;
+	password?: string;
+	roles: ('user' | '***REMOVED***')[];
+}
+
+// mesmíssimo stubUsers do login
+const stubUsers: StubUser[] = [
+	{ id: 'user1', roles: ['user'] },
+	{ id: '***REMOVED***', roles: ['***REMOVED***', 'user'] }
+];
+
+export const handle: Handle = async ({ event, resolve }) => {
+	const sessionId = event.cookies.get('session_id');
+	if (sessionId) {
+		const user = stubUsers.find((u) => u.id === sessionId);
+		if (user) {
+			event.locals.user = { id: user.id, roles: user.roles };
+		}
+	}
+	return await resolve(event);
+};
