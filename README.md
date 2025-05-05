@@ -86,11 +86,6 @@ pnpm test       # Testes unitários (Vitest)
 pnpm e2e        # Testes end-to-end (Playwright)
 ```
 
-## ☁️ Deploy e Túnel
-
-- Para testes locais remotos, use Cloudflare Tunnel (`cloudflared tunnel`) e libere o domínio no `vite.config.ts`
-- A Vercel pode ser usada para hospedagem apenas do frontend. O backend deve estar ativo em outro host ou túnel
-
 ---
 
 © 2025 VigiLar. Todos os direitos reservados.
